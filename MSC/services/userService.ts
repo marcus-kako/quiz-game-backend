@@ -19,9 +19,15 @@ class UserService {
     return users;
   }
 
-  public async create(user: User): Promise<User> {
-    const createdUser = await this.model.create(user);
-    return createdUser;
+  public async create(user: User): Promise<User | undefined> {
+    const isValid = await this.getAll()
+    console.log(isValid);
+    try {
+      const createdUser = await this.model.create(user);
+      return createdUser;
+    } catch (e) {
+      
+    }
   }
 }
 

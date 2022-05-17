@@ -32,8 +32,14 @@ class UserService {
     }
     create(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const createdUser = yield this.model.create(user);
-            return createdUser;
+            const isValid = yield this.getAll();
+            console.log(isValid);
+            try {
+                const createdUser = yield this.model.create(user);
+                return createdUser;
+            }
+            catch (e) {
+            }
         });
     }
 }
