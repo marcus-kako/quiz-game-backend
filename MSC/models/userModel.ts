@@ -1,5 +1,5 @@
 import { Pool, ResultSetHeader } from 'mysql2/promise';
-import User from '../../interfaces/user.interface';
+import IUser from '../../interfaces/IUser';
 
 export default class UserModel {
   public connection: Pool;
@@ -8,11 +8,11 @@ export default class UserModel {
     this.connection = connection;
   }
 
-  public async create(user: User): Promise<User> {
-    const { displayName, email, password } = user;
+  public async create(user: IUser): Promise<IUser> {
+    const { nickname, email, password } = user;
     const result = await this.connection.execute<ResultSetHeader>(
-      'INSERT INTO Users (displayName, email, password) VALUES (?, ?, ?)',
-      [displayName, email, password],
+      'INSERT INTO Users (nickname, email, password) VALUES (?, ?, ?)',
+      [nickname, email, password],
     );
     const [dataInserted] = result;
     const { insertId } = dataInserted;
@@ -23,17 +23,17 @@ export default class UserModel {
     }
   }
 
-  public async getAll(): Promise<User[]> {
+  public async getAll(): Promise<IUser[]> {
     const result = await this.connection
-      .execute('SELECT id, displayName, email FROM Users;');
+      .execute('SELECT id, nickname, email FROM Users;');
     const [rows] = result;
-    return rows as User[];
+    return rows as IUser[];
   }
 
-  public async getById(id: number): Promise<User[] | []> {
+  public async getById(id: number): Promise<IUser[] | []> {
     const result = await this.connection
-      .execute('SELECT id, displayName, email FROM Users WHERE id = ?;', [id]);
+      .execute('SELECT id, nickname, email FROM Users WHERE id = ?;', [id]);
     const [rows] = result;
-    return rows as User[];
+    return rows as IUser[];
   }
 }

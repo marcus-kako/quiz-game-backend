@@ -11,10 +11,10 @@ class UserController {
     return res.status(StatusCodes.CREATED).json(createdUser);
     } catch (e: unknown) {
       if ( e instanceof Error && e.message.includes('"Email" already registered')) {
-        res.status(StatusCodes.CONFLICT).json({ message: e.message})
+        return res.status(StatusCodes.CONFLICT).json({ message: e.message})
       }
-      if ( e instanceof Error && e.message.includes('"displayName" already exists')) {
-        res.status(StatusCodes.CONFLICT).json({ message: e.message})
+      if ( e instanceof Error && e.message.includes('"Nickname" already exists')) {
+        return res.status(StatusCodes.CONFLICT).json({ message: e.message})
       }
     }
   }
