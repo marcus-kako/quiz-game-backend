@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import User from '../../interfaces/user.interface';
 
 const BAD_REQ = 400;
 
 const ValidDName = (req: Request, res: Response, next: NextFunction) => {
-  const { displayName } = req.body; 
-  if (displayName.length < 2) {
+  const { nickname } = req.body; 
+  if (nickname === undefined || nickname === '') {
     return res.status(BAD_REQ)
-    .json({ message: '"displayName" length must be at least 2 characters long' });
+    .json({ message: '"nickname" is required' });
+  }
+  if (nickname.length < 2) {
+    return res.status(BAD_REQ)
+    .json({ message: '"nickname" length must be at least 2 characters long' });
   }
   next();
 };

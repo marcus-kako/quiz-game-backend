@@ -23,6 +23,9 @@ class UserController {
                 return res.status(http_status_codes_1.StatusCodes.CREATED).json(createdUser);
             }
             catch (e) {
+                if (e instanceof Error && e.message.includes('"Email" already registered')) {
+                    res.status(http_status_codes_1.StatusCodes.CONFLICT).json({ message: e.message });
+                }
                 if (e instanceof Error && e.message.includes('"displayName" already exists')) {
                     res.status(http_status_codes_1.StatusCodes.CONFLICT).json({ message: e.message });
                 }

@@ -18,17 +18,35 @@ class UserService {
     constructor() {
         this.model = new userModel_1.default(connection_1.default);
     }
-    create(user) {
+    isValidEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             const allUsers = yield this.getAll();
-            const isValid = allUsers.filter((u) => u.displayName === user.displayName);
-            console.log(isValid);
-            if (isValid.length === 0) {
-                const createdUser = yield this.model.create(user);
-                return createdUser;
+            const isValid = allUsers
+                .filter((u) => u.email === email);
+            return isValid.length === 0;
+        });
+    }
+    isValiddisplayName(displayName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const allUsers = yield this.getAll();
+            const isValid = allUsers
+                .filter((u) => u.displayName === displayName);
+            return isValid.length === 0;
+        });
+    }
+    create(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const vaEmail = yield this.isValidEmail(user.email);
+            const vaDisplayName = yield this.isValiddisplayName(user.displayName);
+            if (!vaEmail) {
+                throw new Error('"Email" already registered');
+            }
+            else if (!vaDisplayName) {
+                throw new Error('"displayName" already exists');
             }
             else {
-                throw new Error('"displayName" already exists');
+                const createdUser = yield this.model.create(user);
+                return createdUser;
             }
         });
     }

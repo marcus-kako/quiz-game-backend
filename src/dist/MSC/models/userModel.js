@@ -25,7 +25,7 @@ class UserModel {
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.connection
-                .execute('SELECT * FROM Users;');
+                .execute('SELECT id, displayName, email FROM Users;');
             const [rows] = result;
             return rows;
         });
@@ -33,7 +33,7 @@ class UserModel {
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.connection
-                .execute('SELECT * FROM Users WHERE id = ?;', [id]);
+                .execute('SELECT id, displayName, email FROM Users WHERE id = ?;', [id]);
             const [rows] = result;
             return rows;
         });
