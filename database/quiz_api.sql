@@ -21,7 +21,7 @@ CREATE TABLE Games (
     PRIMARY KEY(id)
 ) ENGINE=INNODB;
 
-CREATE TABLE user_game (
+CREATE TABLE Users_Games (
     user_id INT NOT NULL,
     game_id INT NOT NULL,
     FOREIGN KEY (user_id)
