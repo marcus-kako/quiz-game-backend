@@ -14,7 +14,7 @@ app.get('/', (req: Request, res: Response) => {
   res.status(StatusCodes.OK).send('Quiz Game API')
 });
 
-app.use('/user', UserRoutes);
+app.use('/users', UserRoutes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   const { name, message, details } = err as any;

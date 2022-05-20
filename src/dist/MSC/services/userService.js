@@ -18,6 +18,20 @@ class UserService {
     constructor() {
         this.model = new userModel_1.default(connection_1.default);
     }
+    create(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const allUsers = yield this.getAll();
+            const isValid = allUsers.filter((u) => u.displayName === user.displayName);
+            console.log(isValid);
+            if (isValid.length === 0) {
+                const createdUser = yield this.model.create(user);
+                return createdUser;
+            }
+            else {
+                throw new Error('"displayName" already exists');
+            }
+        });
+    }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield this.model.getAll();
@@ -28,18 +42,6 @@ class UserService {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield this.model.getById(id);
             return users;
-        });
-    }
-    create(user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const isValid = yield this.getAll();
-            console.log(isValid);
-            try {
-                const createdUser = yield this.model.create(user);
-                return createdUser;
-            }
-            catch (e) {
-            }
         });
     }
 }

@@ -9,6 +9,32 @@ class UserService {
     this.model = new UserModel(connection);
   }
 
+  public async isValidEmail(email: string): Promise<boolean> {
+    const allUsers: User[] = await this.getAll();
+    const isValid: User[] | [] = allUsers
+    .filter((u) => u.email === email) 
+    return isValid.length === 0
+  }
+  public async isValiddisplayName(displayName: string): Promise<boolean> {
+    const allUsers: User[] = await this.getAll();
+    const isValid: User[] | [] = allUsers
+    .filter((u) => u.displayName === displayName) 
+    return isValid.length === 0
+  }
+
+  public async create(user: User): Promise<User | void> {
+    const vaEmail = await this.isValidEmail(user.email) 
+    const vaDisplayName = await this.isValiddisplayName(user.displayName) 
+    if (!vaEmail) {
+      throw new Error('"Email" already registered');
+    } else if (!vaDisplayName) {
+      throw new Error('"displayName" already exists');
+    } else {
+      const createdUser = await this.model.create(user);
+      return createdUser;
+    }
+  }
+
   public async getAll(): Promise<User[]> {
     const users = await this.model.getAll();
     return users;
@@ -17,17 +43,6 @@ class UserService {
   public async getById(id: number): Promise<User[]> {
     const users = await this.model.getById(id);
     return users;
-  }
-
-  public async create(user: User): Promise<User | undefined> {
-    const isValid = await this.getAll()
-    console.log(isValid);
-    try {
-      const createdUser = await this.model.create(user);
-      return createdUser;
-    } catch (e) {
-      
-    }
   }
 }
 

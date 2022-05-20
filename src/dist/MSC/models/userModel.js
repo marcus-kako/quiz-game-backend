@@ -13,6 +13,15 @@ class UserModel {
     constructor(connection) {
         this.connection = connection;
     }
+    create(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { displayName, email, password } = user;
+            const result = yield this.connection.execute('INSERT INTO Users (displayName, email, password) VALUES (?, ?, ?)', [displayName, email, password]);
+            const [dataInserted] = result;
+            const { insertId } = dataInserted;
+            return Object.assign({ id: insertId }, user);
+        });
+    }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.connection
@@ -27,15 +36,6 @@ class UserModel {
                 .execute('SELECT * FROM Users WHERE id = ?;', [id]);
             const [rows] = result;
             return rows;
-        });
-    }
-    create(user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { displayName, email, password } = user;
-            const result = yield this.connection.execute('INSERT INTO Users (displayName, email, password) VALUES (?, ?, ?)', [displayName, email, password]);
-            const [dataInserted] = result;
-            const { insertId } = dataInserted;
-            return Object.assign({ id: insertId }, user);
         });
     }
 }

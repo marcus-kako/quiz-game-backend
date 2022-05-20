@@ -8,20 +8,6 @@ export default class UserModel {
     this.connection = connection;
   }
 
-  public async getAll(): Promise<User[]> {
-    const result = await this.connection
-      .execute('SELECT * FROM Users;');
-    const [rows] = result;
-    return rows as User[];
-  }
-
-  public async getById(id: number): Promise<User[]> {
-    const result = await this.connection
-      .execute('SELECT * FROM Users WHERE id = ?;', [id]);
-    const [rows] = result;
-    return rows as User[];
-  }
-
   public async create(user: User): Promise<User> {
     const { displayName, email, password } = user;
     const result = await this.connection.execute<ResultSetHeader>(
@@ -37,14 +23,17 @@ export default class UserModel {
     }
   }
 
-  // public async create(book: Book): Promise<Book> {
-  //   const { title, price, author, isbn } = book;
-  //   const result = await this.connection.execute<ResultSetHeader>(
-  //     'INSERT INTO books (title, price, author, isbn) VALUES (?, ?, ?, ?)',
-  //     [title, price, author, isbn],
-  //   );
-  //   const [dataInserted] = result;
-  //   const { insertId } = dataInserted;
-    // return { id: insertId, ...book };
-  // }
+  public async getAll(): Promise<User[]> {
+    const result = await this.connection
+      .execute('SELECT id, displayName, email FROM Users;');
+    const [rows] = result;
+    return rows as User[];
+  }
+
+  public async getById(id: number): Promise<User[] | []> {
+    const result = await this.connection
+      .execute('SELECT id, displayName, email FROM Users WHERE id = ?;', [id]);
+    const [rows] = result;
+    return rows as User[];
+  }
 }

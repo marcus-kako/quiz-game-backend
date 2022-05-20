@@ -17,6 +17,17 @@ const userService_1 = __importDefault(require("../services/userService"));
 class UserController {
     constructor(userService = new userService_1.default()) {
         this.userService = userService;
+        this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const createdUser = yield this.userService.create(req.body);
+                return res.status(http_status_codes_1.StatusCodes.CREATED).json(createdUser);
+            }
+            catch (e) {
+                if (e instanceof Error && e.message.includes('"displayName" already exists')) {
+                    res.status(http_status_codes_1.StatusCodes.CONFLICT).json({ message: e.message });
+                }
+            }
+        });
         this.getAll = (_req, res) => __awaiter(this, void 0, void 0, function* () {
             const users = yield this.userService.getAll();
             res.status(http_status_codes_1.StatusCodes.OK).json(users);
@@ -25,15 +36,6 @@ class UserController {
             const id = parseInt(req.params.id);
             const [user] = yield this.userService.getById(id);
             return res.status(http_status_codes_1.StatusCodes.OK).json(user);
-        });
-        this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                const createdUser = yield this.userService.create(req.body);
-                return res.status(http_status_codes_1.StatusCodes.CREATED).json(createdUser);
-            }
-            catch (e) {
-                console.log(e);
-            }
         });
     }
 }
