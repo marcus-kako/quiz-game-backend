@@ -6,7 +6,7 @@ USE QUIZ_GAME_API;
 
 CREATE TABLE Users (
     id INT NOT NULL auto_increment,
-    displayName VARCHAR(30) NOT NULL UNIQUE,
+    nickname VARCHAR(30) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(15) NOT NULL,
     PRIMARY KEY(id)
