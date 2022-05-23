@@ -7,10 +7,16 @@ class GameController {
   constructor(private gameService = new GameService()) { }
 
   public create = async (req: Request, res: Response) => {
-    const { idUser, successes, mistakes, result } = req.body;
+    const { userId, successes, mistakes, result } = req.body;
     const game: IGame = { successes, mistakes, result };
-    const createdGame = await this.gameService.create(idUser, game);
+    const createdGame = await this.gameService.create(userId, game);
     return res.status(StatusCodes.CREATED).json(createdGame);
+  }
+
+  public getAllById = async (req: Request, res: Response) => {
+    const userId = req.params.id;
+    const allGamesUser = await this.gameService.getAllById(Number(userId));
+    return res.status(StatusCodes.OK).json(allGamesUser);
   }
 }
 

@@ -6,8 +6,7 @@ const router = express.Router();
 const gameController = new GameController();
 
 router
-  // .get('/', userController.getAll)
-  // .get('/:id', userController.getById)
-  .post('/', gameController.create);
+.post('/', gameController.create)
+.get('/:id', gameController.getAllById); // O id no parâmetro é o do usuário e não do jogo.
 
 export default router;

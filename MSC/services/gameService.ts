@@ -9,9 +9,14 @@ class GameService {
     this.model = new GameModel(connection);
   }
 
-  public async create(idUser: number, game: IGame): Promise<IGame | void> {
-      const createdGame = await this.model.create(idUser, game);
+  public async create(userId: number, game: IGame): Promise<IGame | void> {
+      const createdGame = await this.model.create(userId, game);
       return createdGame;
+    }
+
+    public async getAllById(userId: number): Promise<IGame[] | []> {
+      const allGamesUser = await this.model.getAllById(userId);
+      return allGamesUser;
     }
   }
 
