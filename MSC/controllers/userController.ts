@@ -25,10 +25,15 @@ class UserController {
   };
 
   public getById = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-
-    const [user] = await this.userService.getById(id);
-    return res.status(StatusCodes.OK).json(user);
+    try {
+      const id = parseInt(req.params.id);
+      const [user] = await this.userService.getById(id);
+      return res.status(StatusCodes.OK).json(user);
+    } catch (error: unknown) {
+      if (error instanceof Error && error.message.includes('user not found')) {
+        res.status(StatusCodes.NOT_FOUND).json({ message: error.message})
+      }
+    }
   }
 }
 

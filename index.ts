@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import UserRoutes from './routes/user.routes';
 import LoginRoutes from './routes/login.routes';
+import GameRoutes from './routes/game.routes';
 import 'express-async-errors';
 import 'dotenv/config';
 
@@ -17,6 +18,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/users', UserRoutes);
 app.use('/login', LoginRoutes);
+app.use('/games', GameRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

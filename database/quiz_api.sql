@@ -16,7 +16,7 @@ CREATE TABLE Games (
     id INT NOT NULL auto_increment,
     successes INT NOT NULL,
     mistakes INT NOT NULL,
-    result INT NOT NULL,
+    result BOOLEAN NOT NULL,
     date DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 ) ENGINE=INNODB;

@@ -1,8 +1,9 @@
-interface Game {
+interface IGame {
   id?: number;
-  hits: number;
-  misses: number;
-  result: number;
+  successes: number;
+  mistakes: number;
+  result: boolean; // Retorna 1 para TRUE, e 0 para FALSE
+  date?: string;
 }
 
-export default Game;
+export default IGame;
