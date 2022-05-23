@@ -42,6 +42,9 @@ class UserService {
 
   public async getById(id: number): Promise<IUser[]> {
     const users = await this.model.getById(id);
+    if (users.length === 0) {
+      throw new Error('user not found')
+    }
     return users;
   }
 }

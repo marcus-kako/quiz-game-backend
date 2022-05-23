@@ -1,5 +1,6 @@
 import { Pool, ResultSetHeader } from 'mysql2/promise';
 import IGame from '../../interfaces/IGame';
+import IUser from "../../interfaces/IUser";
 import IUsers_Games from "../../interfaces/IUsers_Games";
 
 export default class GameModel {
@@ -27,6 +28,20 @@ export default class GameModel {
       id: game_id,
       ...game,
     }
+  }
+
+  public async getUserById(userId: number): Promise<IUser[] | []> {
+    const result = await this.connection
+      .execute('SELECT id, nickname, email FROM Users WHERE id = ?;', [userId]);
+    const [rows] = result;
+    return rows as IUser[];
+  }
+
+  public async getAll(userId: number): Promise<IUsers_Games[] | []> {
+    const [game_ids] = await this.connection
+      .execute('SELECT * FROM Users_Games WHERE user_id = ?;', [userId]);
+    const type_game_ids = game_ids as IUsers_Games[] | [];
+    return type_game_ids;
   }
   
     public async getAllById(userId: number): Promise<IGame[] | []> {
