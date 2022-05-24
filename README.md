@@ -6,8 +6,8 @@
  [*]- mys-ql2
 
  # Banco:
- [*]- Mysql => Desenvolvimento.
- [*]- SupaBase (postgresql) => em produção.
+ * Mysql => Desenvolvimento.
+ * [SupaBase (postgresql) => em produção.]
 
  
  
