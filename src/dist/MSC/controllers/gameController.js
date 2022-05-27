@@ -46,7 +46,6 @@ class GameController {
             const { amount, category, difficulty, type } = req.body;
             try {
                 const questions = yield this.gameService.generate(amount, category, difficulty, type);
-                console.log(questions);
                 return res.status(http_status_codes_1.StatusCodes.CREATED).json(questions);
             }
             catch (error) {

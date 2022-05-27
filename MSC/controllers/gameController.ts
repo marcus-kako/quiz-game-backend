@@ -35,7 +35,6 @@ class GameController {
     const { amount, category, difficulty, type } = req.body;
     try {
       const questions = await this.gameService.generate(amount, category, difficulty, type);
-      console.log(questions)
       return res.status(StatusCodes.CREATED).json(questions);
     } catch (error: unknown) {
       res.status(StatusCodes.CONFLICT).json({ message: error })
