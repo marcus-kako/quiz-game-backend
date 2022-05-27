@@ -30,19 +30,19 @@ class UserService {
         return __awaiter(this, void 0, void 0, function* () {
             const allUsers = yield this.getAll();
             const isValid = allUsers
-                .filter((u) => u.displayName === displayName);
+                .filter((u) => u.nickname === displayName);
             return isValid.length === 0;
         });
     }
     create(user) {
         return __awaiter(this, void 0, void 0, function* () {
             const vaEmail = yield this.isValidEmail(user.email);
-            const vaDisplayName = yield this.isValiddisplayName(user.displayName);
+            const vaDisplayName = yield this.isValiddisplayName(user.nickname);
             if (!vaEmail) {
                 throw new Error('"Email" already registered');
             }
             else if (!vaDisplayName) {
-                throw new Error('"displayName" already exists');
+                throw new Error('"Nickname" already exists');
             }
             else {
                 const createdUser = yield this.model.create(user);
@@ -59,6 +59,9 @@ class UserService {
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield this.model.getById(id);
+            if (users.length === 0) {
+                throw new Error('user not found');
+            }
             return users;
         });
     }

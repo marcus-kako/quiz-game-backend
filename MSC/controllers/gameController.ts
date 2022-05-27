@@ -17,7 +17,6 @@ class GameController {
         res.status(StatusCodes.NOT_FOUND).json({ message: error.message})
       }
     }
-   
   }
 
   public getAllById = async (req: Request, res: Response) => {
@@ -29,6 +28,17 @@ class GameController {
       if (error instanceof Error && error.message.includes('User has no game history')) {
         return res.status(StatusCodes.NOT_FOUND).json({ message: error.message});
       }
+    }
+  }
+
+  public generate = async (req: Request, res: Response) => {
+    const { amount, category, difficulty, type } = req.body;
+    try {
+      const questions = await this.gameService.generate(amount, category, difficulty, type);
+      console.log(questions)
+      return res.status(StatusCodes.CREATED).json(questions);
+    } catch (error: unknown) {
+      res.status(StatusCodes.CONFLICT).json({ message: error })
     }
   }
 }

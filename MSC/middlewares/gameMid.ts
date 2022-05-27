@@ -41,7 +41,32 @@ const validBody = (req: Request, res: Response, next: NextFunction) => {
  next();
 };
 
+const ValidGenerateGameBody = (req: Request, res: Response, next: NextFunction) => {
+  const { amount, category, difficulty, type } = req.body;
+  if (!amount || amount === '') {
+   return res.status(StatusCodes.BAD_REQUEST)
+     .json({ message: 'amount is required' });
+  }
+
+  if (!category || category === '') {
+   return res.status(StatusCodes.BAD_REQUEST)
+     .json({ message: 'category is required' });
+   }
+
+  if (!difficulty || difficulty === '') {
+  return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: 'difficulty is required' });
+  }
+
+  if (!type || type=== '') {
+    return res.status(StatusCodes.BAD_REQUEST)
+      .json({ message: 'type is required' });
+    }
+ next();
+};
+
 export default  {
   ValidId,
   validBody,
+  ValidGenerateGameBody
 };

@@ -24,10 +24,10 @@ class UserController {
             }
             catch (e) {
                 if (e instanceof Error && e.message.includes('"Email" already registered')) {
-                    res.status(http_status_codes_1.StatusCodes.CONFLICT).json({ message: e.message });
+                    return res.status(http_status_codes_1.StatusCodes.CONFLICT).json({ message: e.message });
                 }
-                if (e instanceof Error && e.message.includes('"displayName" already exists')) {
-                    res.status(http_status_codes_1.StatusCodes.CONFLICT).json({ message: e.message });
+                if (e instanceof Error && e.message.includes('"Nickname" already exists')) {
+                    return res.status(http_status_codes_1.StatusCodes.CONFLICT).json({ message: e.message });
                 }
             }
         });
@@ -36,9 +36,16 @@ class UserController {
             res.status(http_status_codes_1.StatusCodes.OK).json(users);
         });
         this.getById = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id);
-            const [user] = yield this.userService.getById(id);
-            return res.status(http_status_codes_1.StatusCodes.OK).json(user);
+            try {
+                const id = parseInt(req.params.id);
+                const [user] = yield this.userService.getById(id);
+                return res.status(http_status_codes_1.StatusCodes.OK).json(user);
+            }
+            catch (error) {
+                if (error instanceof Error && error.message.includes('user not found')) {
+                    res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: error.message });
+                }
+            }
         });
     }
 }

@@ -15,8 +15,8 @@ class UserModel {
     }
     create(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { displayName, email, password } = user;
-            const result = yield this.connection.execute('INSERT INTO Users (displayName, email, password) VALUES (?, ?, ?)', [displayName, email, password]);
+            const { nickname, email, password } = user;
+            const result = yield this.connection.execute('INSERT INTO Users (nickname, email, password) VALUES (?, ?, ?)', [nickname, email, password]);
             const [dataInserted] = result;
             const { insertId } = dataInserted;
             return Object.assign({ id: insertId }, user);
@@ -25,7 +25,7 @@ class UserModel {
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.connection
-                .execute('SELECT id, displayName, email FROM Users;');
+                .execute('SELECT id, nickname, email FROM Users;');
             const [rows] = result;
             return rows;
         });
@@ -33,7 +33,7 @@ class UserModel {
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.connection
-                .execute('SELECT id, displayName, email FROM Users WHERE id = ?;', [id]);
+                .execute('SELECT id, nickname, email FROM Users WHERE id = ?;', [id]);
             const [rows] = result;
             return rows;
         });
