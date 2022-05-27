@@ -9,6 +9,6 @@ const gameController = new GameController();
 router
 .post('/', GameMid.validBody, gameController.create)
 .get('/:id', GameMid.ValidId, gameController.getAllById) // O id no parâmetro é o do usuário e não do jogo.
-.get('/quests/generate', GameMid.ValidGenerateGameBody, gameController.generate);
+.post('/quests/generate', GameMid.ValidGenerateGameBody, gameController.generate);
 
 export default router;

@@ -43,9 +43,12 @@ class GameService {
     generate(amount, category, difficulty, type) {
         return __awaiter(this, void 0, void 0, function* () {
             let urbBase = `https://opentdb.com/api.php?`;
-            let url = `amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`;
+            let urlAmount = `amount=${amount}&`;
+            let urlCategory = `category=${category}&`;
+            let urlDifficulty = difficulty === 'Any' ? '' : `difficulty=${difficulty}&`;
+            let urlType = type === 'Any' ? '' : `type=${type}`;
             let questions = [];
-            yield axios.get(`${urbBase + url}`)
+            yield axios.get(`${urbBase + urlAmount + urlCategory + urlDifficulty + urlType}`)
                 .then((res) => { questions = res.data.results; })
                 .catch((err) => { throw new Error('Error calling external API'); });
             return questions;

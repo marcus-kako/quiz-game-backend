@@ -48,7 +48,7 @@ const ValidGenerateGameBody = (req: Request, res: Response, next: NextFunction) 
      .json({ message: 'amount is required' });
   }
 
-  if (!category || category === '') {
+  if (category === '') {
    return res.status(StatusCodes.BAD_REQUEST)
      .json({ message: 'category is required' });
    }

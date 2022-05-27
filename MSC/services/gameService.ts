@@ -32,9 +32,12 @@ class GameService {
 
   public async generate(amount: number, category: number, difficulty: string, type: string): Promise<IQuest[]> {
     let urbBase = `https://opentdb.com/api.php?`
-    let url = `amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`
+    let urlAmount = `amount=${amount}&`
+    let urlCategory =  `category=${category}&`
+    let urlDifficulty = difficulty === 'Any' ? '' : `difficulty=${difficulty}&`
+    let urlType = type === 'Any' ? '' : `type=${type}` 
     let questions: IQuest[] = []
-    await axios.get(`${urbBase + url}`)
+    await axios.get(`${urbBase + urlAmount + urlCategory + urlDifficulty + urlType}`)
     .then((res: any) => { questions = res.data.results })
     .catch((err: any) => { throw new Error('Error calling external API') })
     return questions as IQuest[]
